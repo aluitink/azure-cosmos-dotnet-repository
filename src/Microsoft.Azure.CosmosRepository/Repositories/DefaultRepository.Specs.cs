@@ -10,6 +10,7 @@ internal sealed partial class DefaultRepository<TItem>
     /// <inheritdoc/>
     public async ValueTask<TResult> QueryAsync<TResult>(
         ISpecification<TItem, TResult> specification,
+        bool returnTotal = false, 
         CancellationToken cancellationToken = default)
         where TResult : IQueryResult<TItem>
     {
@@ -40,11 +41,27 @@ internal sealed partial class DefaultRepository<TItem>
 
         logger.LogQueryExecuted(query, charge);
 
-        Response<int> count = await CountAsync(specification, cancellationToken)
-            .ConfigureAwait(false);
+        Response<int>? countResponse = null;
+
+        if (returnTotal)
+        {
+            countResponse = await CountAsync(specification, cancellationToken)
+                .ConfigureAwait(false);
+        }
+        
 
         return specification.PostProcessingAction(
-            items.AsReadOnly(), count.Resource, charge + count.RequestCharge,
+            items.AsReadOnly(),
+            countResponse?.Resource ?? 0,
+            charge + countResponse?.RequestCharge ?? 0,
             continuationToken);
+    }
+
+    public ValueTask<TResult> QueryAsync<TResult>(
+       ISpecification<TItem, TResult> specification,
+       CancellationToken cancellationToken = default)
+       where TResult : IQueryResult<TItem>
+    {
+        return QueryAsync(specification, true, cancellationToken);
     }
 }

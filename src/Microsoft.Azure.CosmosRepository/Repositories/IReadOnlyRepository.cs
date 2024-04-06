@@ -201,7 +201,25 @@ public interface IReadOnlyRepository<TItem> where TItem : IItem
         ISpecification<TItem, TResult> specification,
         CancellationToken cancellationToken = default)
         where TResult : IQueryResult<TItem>;
-
+    /// <summary>
+    /// Get items based on a specification.
+    /// The specification is used to define which filters are used, the order of the search results and how they are paged.
+    /// Depending on how results are paged derive specification implementations from different classes:
+    /// For non paged results derive <see cref="DefaultSpecification{TItem}"/>
+    /// For continuation token derive <see cref="ContinuationTokenSpecification{T}"/>
+    /// For page number results derive <see cref="OffsetByPageNumberSpecification{T}"/>
+    /// </summary>
+    /// <typeparam name="TResult">Decides which paging information is retrieved. Use <see cref="ContinuationTokenSpecification{T}"/></typeparam>
+    /// <param name="specification">A specification used to filtering, ordering and paging. A <see cref="ISpecification{T, TResult}"/></param>
+    /// <param name="returnTotal">Perform a Count query to for total otherwise 0.</param>
+    /// <param name="cancellationToken">The cancellation token to use when making asynchronous operations.</param>
+    /// <returns>The selected <typeparamref name="TResult"/> implementation that implements <see cref="IQueryResult{T}"/> of <see cref="IItem"/></returns>
+    /// <remarks>This method makes use of cosmos dbs continuation tokens for efficient, cost effective paging utilising low RUs</remarks>
+    ValueTask<TResult> QueryAsync<TResult>(
+        ISpecification<TItem, TResult> specification,
+        bool returnTotal = false,
+        CancellationToken cancellationToken = default)
+        where TResult : IQueryResult<TItem>;
     /// <summary>
     /// Offers a load more paging implementation for infinite scroll scenarios.
     /// Allows for efficient paging making use of cosmos DBs continuation tokens, making this implementation cost effective.

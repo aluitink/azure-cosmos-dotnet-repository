@@ -9,7 +9,7 @@ internal partial class InMemoryRepository<TItem>
 {
     public async ValueTask<TResult> QueryAsync<TResult>(
         ISpecification<TItem, TResult> specification,
-        bool returnTotal = false,
+        bool returnTotal,
         CancellationToken cancellationToken = default)
         where TResult : IQueryResult<TItem>
     {

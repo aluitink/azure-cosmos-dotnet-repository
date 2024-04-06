@@ -10,7 +10,7 @@ internal sealed partial class DefaultRepository<TItem>
     /// <inheritdoc/>
     public async ValueTask<TResult> QueryAsync<TResult>(
         ISpecification<TItem, TResult> specification,
-        bool returnTotal = false, 
+        bool returnTotal, 
         CancellationToken cancellationToken = default)
         where TResult : IQueryResult<TItem>
     {

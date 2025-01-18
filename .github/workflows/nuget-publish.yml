@@ -128,7 +128,7 @@ jobs:
 
       - name: Publish ${{ matrix.project }} package
         run: |
-          nuget push **\*.nupkg -NoSymbols -Source 'https://nuget.pkg.github.com/aluitink/index.json' -ApiKey ${{secrets.PACKAGE_PUBLISH_TOKEN}}
+          dotnet nuget push **\*.nupkg -NoSymbols -Source 'https://nuget.pkg.github.com/aluitink/index.json' -ApiKey ${{secrets.PACKAGE_PUBLISH_TOKEN}}
 
       - name: Upload Package
         uses: actions/upload-artifact@main

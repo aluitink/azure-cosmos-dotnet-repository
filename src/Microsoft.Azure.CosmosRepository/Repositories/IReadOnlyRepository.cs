@@ -199,6 +199,7 @@ public interface IReadOnlyRepository<TItem> where TItem : IItem
     /// <remarks>This method makes use of cosmos dbs continuation tokens for efficient, cost effective paging utilising low RUs</remarks>
     ValueTask<TResult> QueryAsync<TResult>(
         ISpecification<TItem, TResult> specification,
+        bool returnTotal = true,
         CancellationToken cancellationToken = default)
         where TResult : IQueryResult<TItem>;
 

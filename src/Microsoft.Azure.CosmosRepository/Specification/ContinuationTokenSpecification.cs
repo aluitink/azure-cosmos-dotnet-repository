@@ -35,7 +35,7 @@ public class ContinuationTokenSpecification<TItem> : BaseSpecification<TItem, IP
     /// <inheritdoc/>
     public override IPage<TItem> PostProcessingAction(
         IReadOnlyList<TItem> queryResult,
-        int totalCount,
+        int? totalCount,
         double charge,
         string? continuationToken) =>
         new Page<TItem>(totalCount, PageSize, queryResult, charge, continuationToken);

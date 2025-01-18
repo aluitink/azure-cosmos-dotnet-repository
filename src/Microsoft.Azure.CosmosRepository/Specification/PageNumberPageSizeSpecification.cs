@@ -36,7 +36,7 @@ public class OffsetByPageNumberSpecification<TItem> : BaseSpecification<TItem, I
     /// <inheritdoc/>
     public override IPageQueryResult<TItem> PostProcessingAction(
         IReadOnlyList<TItem> queryResult,
-        int totalCount,
+        int? totalCount,
         double charge,
         string? continuationToken) => new PageQueryResult<TItem>(
             totalCount,

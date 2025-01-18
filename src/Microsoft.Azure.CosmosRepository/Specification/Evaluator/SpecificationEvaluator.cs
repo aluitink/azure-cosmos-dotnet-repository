@@ -29,7 +29,7 @@ internal class SpecificationEvaluator : ISpecificationEvaluator
     public TResult GetResult<TItem, TResult>(
         IReadOnlyList<TItem> res,
         ISpecification<TItem, TResult> specification,
-        int totalCount,
+        int? totalCount,
         double charge,
         string continuationToken)
         where TItem : IItem

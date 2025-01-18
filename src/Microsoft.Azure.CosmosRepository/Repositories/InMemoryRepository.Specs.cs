@@ -9,6 +9,7 @@ internal partial class InMemoryRepository<TItem>
 {
     public async ValueTask<TResult> QueryAsync<TResult>(
         ISpecification<TItem, TResult> specification,
+        bool returnTotal = true,
         CancellationToken cancellationToken = default)
         where TResult : IQueryResult<TItem>
     {
@@ -29,9 +30,10 @@ internal partial class InMemoryRepository<TItem>
             .Where(item => item.Type == typeof(TItem).Name);
 
         query = _specificationEvaluator.GetQuery(query, specification);
-
-        var countResponse = query.Count();
-
+        int? countResponse = null;
+        if (returnTotal)
+            countResponse = query.Count();
+        
         return _specificationEvaluator.GetResult(
             query.ToList().AsReadOnly(),
             specification,

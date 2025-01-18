@@ -51,7 +51,7 @@ public abstract class BaseSpecification<TItem, TResult> : ISpecification<TItem, 
     /// <inheritdoc/>
     public abstract TResult PostProcessingAction(
         IReadOnlyList<TItem> queryResult,
-        int totalCount,
+        int? totalCount,
         double charge,
         string? continuationToken);
 }

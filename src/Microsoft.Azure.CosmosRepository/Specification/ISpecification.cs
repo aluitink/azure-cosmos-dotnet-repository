@@ -24,7 +24,7 @@ public interface ISpecification<TItem, out TResult>
     /// </summary>
     TResult PostProcessingAction(
         IReadOnlyList<TItem> queryResult,
-        int totalCount,
+        int? totalCount,
         double charge,
         string? continuationToken);
 

@@ -9,7 +9,7 @@ internal interface ISpecificationEvaluator
         where TItem : IItem
         where TResult : IQueryResult<TItem>;
 
-    TResult GetResult<TItem, TResult>(IReadOnlyList<TItem> res, ISpecification<TItem, TResult> specification, int totalCount, double charge, string continuationToken)
+    TResult GetResult<TItem, TResult>(IReadOnlyList<TItem> res, ISpecification<TItem, TResult> specification, int? totalCount, double charge, string continuationToken)
         where TItem : IItem
         where TResult : IQueryResult<TItem>;
 }

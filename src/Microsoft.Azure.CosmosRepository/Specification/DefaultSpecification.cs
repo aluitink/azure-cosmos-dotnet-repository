@@ -13,7 +13,7 @@ public class DefaultSpecification<TItem> : BaseSpecification<TItem, IQueryResult
     /// <inheritdoc/>
     public override IQueryResult<TItem> PostProcessingAction(
         IReadOnlyList<TItem> queryResult,
-        int totalCount,
+        int? totalCount,
         double charge,
         string? continuationToken) =>
         new QueryResult<TItem>(queryResult, charge);
